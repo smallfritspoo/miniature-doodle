@@ -6,32 +6,34 @@ from functools import wraps
 from flask import request, jsonify
 from .models import User
 
+from flask import current_app
+import jwt
+
 def token_required(f):
     """
-    Decorator to ensure that a valid token is present in the request headers.
+    Decorator that checks for a valid JWT token in the request headers.
+
+    This decorator ensures that the request has a valid 'x-access-token' header.
+    It decodes the token to identify the user and passes the user object to the
+    decorated function.
 
     Args:
         f (function): The function to be decorated.
 
     Returns:
-        function: The decorated function.
+        The decorated function or a JSON error response if authentication fails.
     """
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
         if 'x-access-token' in request.headers:
             token = request.headers['x-access-token']
-
         if not token:
             return jsonify({'message': 'Token is missing!'}), 401
-
         try:
-            user = User.query.filter_by(api_token=token).first()
-            if not user:
-                return jsonify({'message': 'Token is invalid!'}), 401
-        except Exception as e:
+            data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=["HS256"])
+            current_user = User.query.filter_by(id=data['id']).first()
+        except:
             return jsonify({'message': 'Token is invalid!'}), 401
-
-        return f(user, *args, **kwargs)
-
+        return f(current_user, *args, **kwargs)
     return decorated
