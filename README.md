@@ -56,8 +56,8 @@ minicrud is a simple RESTful API built with Flask, SQLAlchemy, and PostgreSQL. I
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-repo/minicrud.git
-cd minicrud
+git clone https://github.com/your-repo/miniature-doodle.git
+cd miniature-doodle
 ```
 
 ### 2. Environment Variables
@@ -129,6 +129,27 @@ The API will be accessible at `http://localhost:5000`.
     ```
 
 The API will be accessible at `http://localhost:5000`.
+
+## Testing
+
+To run the tests, activate your virtual environment and then execute pytest:
+
+```bash
+source venv/bin/activate
+pytest
+```
+
+## Documentation
+
+The project documentation is generated using Sphinx. To build the documentation, navigate to the `docs` directory and run `make html`:
+
+```bash
+cd docs
+make html
+```
+
+The generated HTML documentation will be available in `docs/_build/html`.
+
 
 ## API Endpoints
 
