@@ -14,20 +14,34 @@ minicrud is a simple RESTful API built with Flask, SQLAlchemy, and PostgreSQL. I
 ## Project Structure
 
 ```
-minicrud/
-├── minicrud/
-│   ├── __init__.py
-│   ├── app.py
-│   ├── auth.py
-│   ├── config.py
-│   ├── database.py
-│   └── models.py
-├── sql/
-│   └── init.sql
+.
 ├── .env.example
+├── .gitignore
 ├── Dockerfile
+├── INTERACTION_SUMMARY.md
+├── Makefile
 ├── README.md
+├── docs
+│   ├── Makefile
+│   ├── conf.py
+│   ├── index.rst
+│   ├── make.bat
+│   └── modules.rst
+├── minicrud
+│   ├── __init__.py
+│   ├── app.py
+│   ├── auth.py
+│   ├── blueprints
+│   │   └── data_bp.py
+│   ├── config.py
+│   ├── database.py
+│   └── models.py
 ├── requirements.txt
+├── sql
+│   └── init.sql
+├── tests
+│   ├── __init__.py
+│   └── test_data_bp.py
 └── wsgi.py
 ```
 
