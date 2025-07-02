@@ -3,9 +3,9 @@ This module defines the blueprint for the data-related endpoints.
 """
 
 from flask import Blueprint, request, jsonify
-from ..database import db
-from ..models import Data
-from ..auth import token_required
+from minicrud.database import db
+from minicrud.models import Data
+from minicrud.auth import token_required
 
 data_bp = Blueprint('data_bp', __name__)
 
@@ -25,7 +25,7 @@ def create_data(current_user):
         A JSON response indicating the success or failure of the operation.
     """
     data = request.get_json()
-    new_data = Data(text=data['text'], editor=current_user.username)
+    new_data = Data(text=data['text'], user_id=current_user.id)
     db.session.add(new_data)
     db.session.commit()
     return jsonify({'message': 'New data created!'})

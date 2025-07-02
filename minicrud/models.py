@@ -2,7 +2,7 @@
 This module defines the database models for the minicrud application.
 """
 
-from .database import db
+from minicrud.database import db
 import datetime
 
 class User(db.Model):
