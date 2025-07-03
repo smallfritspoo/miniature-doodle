@@ -2,7 +2,7 @@
 This module defines the blueprint for the data-related endpoints.
 """
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from minicrud.database import db
 from minicrud.models import Data
 from minicrud.auth import token_required
@@ -28,6 +28,7 @@ def create_data(current_user):
     new_data = Data(text=data['text'], user_id=current_user.id)
     db.session.add(new_data)
     db.session.commit()
+    current_app.logger.info(f"User {current_user.username} created new data with id {new_data.id}")
     return jsonify({'message': 'New data created!'})
 
 @data_bp.route('/data', methods=['GET'])
@@ -53,6 +54,7 @@ def get_all_data(current_user):
         data_data['last_modified'] = data.last_modified
         data_data['editor'] = data.editor
         output.append(data_data)
+    current_app.logger.info(f"User {current_user.username} retrieved all data.")
     return jsonify({'data': output})
 
 @data_bp.route('/data/<data_id>', methods=['GET'])
@@ -72,12 +74,14 @@ def get_one_data(current_user, data_id):
     """
     data = Data.query.filter_by(id=data_id, editor=current_user.username).first()
     if not data:
+        current_app.logger.warning(f"User {current_user.username} failed to retrieve data with id {data_id}.")
         return jsonify({'message': 'No data found!'})
     data_data = {}
     data_data['id'] = data.id
     data_data['text'] = data.text
     data_data['last_modified'] = data.last_modified
     data_data['editor'] = data.editor
+    current_app.logger.info(f"User {current_user.username} retrieved data with id {data_id}.")
     return jsonify(data_data)
 
 @data_bp.route('/data/<data_id>', methods=['PUT'])
@@ -98,10 +102,12 @@ def update_data(current_user, data_id):
     """
     data = Data.query.filter_by(id=data_id, editor=current_user.username).first()
     if not data:
+        current_app.logger.warning(f"User {current_user.username} failed to update data with id {data_id}.")
         return jsonify({'message': 'No data found!'})
     text = request.get_json()['text']
     data.text = text
     db.session.commit()
+    current_app.logger.info(f"User {current_user.username} updated data with id {data_id}.")
     return jsonify({'message': 'Data has been updated!'})
 
 @data_bp.route('/data/<data_id>', methods=['DELETE'])
@@ -121,7 +127,9 @@ def delete_data(current_user, data_id):
     """
     data = Data.query.filter_by(id=data_id, editor=current_user.username).first()
     if not data:
+        current_app.logger.warning(f"User {current_user.username} failed to delete data with id {data_id}.")
         return jsonify({'message': 'No data found!'})
     db.session.delete(data)
     db.session.commit()
+    current_app.logger.info(f"User {current_user.username} deleted data with id {data_id}.")
     return jsonify({'message': 'Data has been deleted!'})
