@@ -10,6 +10,7 @@ minicrud is a simple RESTful API built with Flask, SQLAlchemy, and PostgreSQL. I
 *   **Token-Based Authentication**: Secure API access using tokens.
 *   **Docker Support**: Easy containerization for deployment.
 *   **Google Style Python Docstrings**: Well-documented source code.
+*   **Verbose Logging**: Detailed logging of application events.
 
 ## Project Structure
 
@@ -22,26 +23,26 @@ minicrud is a simple RESTful API built with Flask, SQLAlchemy, and PostgreSQL. I
 ├── Makefile
 ├── README.md
 ├── docs
-│   ├── Makefile
-│   ├── conf.py
-│   ├── index.rst
-│   ├── make.bat
-│   └── modules.rst
+│   ├── Makefile
+│   ├── conf.py
+│   ├── index.rst
+│   ├── make.bat
+│   └── modules.rst
 ├── minicrud
-│   ├── __init__.py
-│   ├── app.py
-│   ├── auth.py
-│   ├── blueprints
-│   │   └── data_bp.py
-│   ├── config.py
-│   ├── database.py
-│   └── models.py
+│   ├── __init__.py
+│   ├── app.py
+│   ├── auth.py
+│   ├── blueprints
+│   │   └── data_bp.py
+│   ├── config.py
+│   ├── database.py
+│   └── models.py
 ├── requirements.txt
 ├── sql
-│   └── init.sql
+│   └── init.sql
 ├── tests
-│   ├── __init__.py
-│   └── test_data_bp.py
+│   ├── __init__.py
+│   └── test_data_bp.py
 └── wsgi.py
 ```
 
@@ -130,6 +131,14 @@ The API will be accessible at `http://localhost:5000`.
 
 The API will be accessible at `http://localhost:5000`.
 
+## Logging
+
+The application uses Python's built-in logging library to provide verbose logging. The logging configuration can be controlled through environment variables:
+
+*   `LOG_LEVEL`: The logging level. Defaults to `DEBUG`.
+*   `LOG_FILE`: The name of the log file. Defaults to `minicrud.log`.
+*   `LOG_FORMAT`: The format of the log messages. Defaults to `%(asctime)s %(levelname)s %(message)s`.
+
 ## Testing
 
 To run the tests, activate your virtual environment and then execute pytest:
@@ -204,3 +213,4 @@ Feel free to fork the repository, open issues, and submit pull requests.
 ## License
 
 This project is open-source and available under the [MIT License](LICENSE). (You might want to create a LICENSE file if you plan to open source this project.)
+
